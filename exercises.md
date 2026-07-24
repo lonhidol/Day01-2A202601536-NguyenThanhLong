@@ -65,13 +65,13 @@ và vì sao?**
 **Xét ba ứng dụng: (a) chatbot văn bản, (b) trợ lý giọng nói đọc to phản hồi,
 (c) pipeline dịch tài liệu chạy ngầm ban đêm. Ứng dụng nào hưởng lợi nhiều
 nhất từ streaming, ứng dụng nào không cần — và tại sao?** (1 đoạn văn)
-> *Câu trả lời của bạn*
+> *Đối với streaming thì (b) sẽ được hưởng lợi nhiều nhất và sau đó là (a) vì khi đó những phương diện giao tiếp trực tiếp đối với người dùng có thể hiển thị ngay thay vì chờ đợi được load toàn bộ rồi mới hiển thị còn đối với (c) sẽ chạy ngầm nên không cần thiết đối với streaming*
 
 ### Câu 3.2 — Vì sao backoff theo cấp số nhân?
 **Khi API quá tải và hàng nghìn client cùng retry, exponential backoff giúp
 gì so với delay cố định? Tra cứu thêm: kỹ thuật "jitter" (thêm độ trễ ngẫu
 nhiên) giải quyết vấn đề gì còn sót lại?**
-> *Câu trả lời của bạn*
+> *Khi api quá tải và hàng nghìn client cùng retry, exponential backoff giúp đối với mỗi khi thất bại sẽ cần chờ lâu hơn trước khi thử lại, từ đó hạn chế số lần retry tránh nghẽn máy chủ. Song vẫn còn có thể có nhiều người cùng lúc có thể retry, lúc đó jitter được sử dụng để tạo sự ngẫu nhiên tránh tắc nghẽn đồng thời cùng lúc, tạo sự ngẫu nhiên trước khi được phép retry.*
 
 ---
 
@@ -81,13 +81,13 @@ nhiên) giải quyết vấn đề gì còn sót lại?**
 **Viết lại system prompt bạn dùng cho trợ lý của mình. Chỉ ra 2 chỗ trong
 prompt mà nếu xóa đi, hành vi trợ lý sẽ thay đổi rõ rệt — và mô tả thay đổi
 đó:**
-> *Câu trả lời của bạn*
+> *System prompt mà tôi sử dụng: "Bạn là trợ giảng AI thân thiện, trả lời ngắn gọn bằng tiếng Việt, giải thích rõ ràng và đưa ra ví dụ khi cần.". Hai vị trí quan trọng trong prompt sẽ là "Trả lời ngắn gọn bằng tiếng Việt" và "Giải thích rõ ràng và đưa ra ví dụ khi cần", đối với trả lời ngắn gọn bằng tiếng Việt nếu không có sẽ khiến câu trả lời có thể được trả về bằng ngôn ngữ khác và có thể rất dài dòng còn đối với giải thích rõ ràng và đưa ra ví dụ khi cần thì sẽ được yêu cầu cung cấp câu trả lời ngắn và cung cấp được ví dụ minh hoạ tốt hơn.*
 
 ### Câu 4.2 — Hạn chế & cải thiện
 **Trợ lý của bạn giữ history 4 lượt cuối. Hãy mô tả một tình huống hội thoại
 cụ thể mà giới hạn này khiến trợ lý trả lời sai/mất ngữ cảnh, và đề xuất một
 cách khắc phục (ví dụ: tóm tắt các lượt cũ, tăng giới hạn có chọn lọc...):**
-> *Câu trả lời của bạn*
+> *Trong chương trình sẽ lưu 4 đoạn hội thoại gần nhất (8 câu) bằng lệnh history = history[-8:] và sau 4 lần hỏi đáp như vậy trợ lý sẽ bị "mất trí nhớ" quên đi ngữ cảnh đầu tiên. Có thể khắc phục bằng cách tạo bản ghi thành 1 message chung để lưu lại các hội thoại cũ hoặc tăng giới hạn chứa*
 
 ---
 
